@@ -253,7 +253,6 @@ h5,
 h6 {
   text-rendering: optimizeLegibility;
   line-height: 1;
-  margin: 2rem 0;
 }
 h1 {
   font-size: 2.1rem;
@@ -284,6 +283,9 @@ ul,
 ol,
 dl {
   margin: 1em 0;
+}
+ul {
+  padding-left: 1em;
 }
 ol ol,
 ul ul,
@@ -334,7 +336,7 @@ hr {
 blockquote {
   box-sizing: border-box;
   margin: 1.6em 0 1.6em 0em;
-  padding: 0 0 0 1.6em;
+  padding: 0 0 0 0.5em;
   border-left: #f66 0.5em solid;
   background-color: #f8f8f8;
 }
