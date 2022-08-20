@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Bo Lin Jay"><title>初识TypeScript · 霖 の Blog</title><meta name="description" content="TypeScript
+TypeScript 介绍
+TypeScript 初体验
+TypeScript 常用类型
+TypeScript 高级类型
+TypeScript 类型声明文件
+在 React 中使用 TypeScript
+
+TypeScript 介绍
+TS 官方文档
+TS 中文参考 - 不再维护"><meta name="keywords" content="Blog,博客,柏霖 の"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.2.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/tags">标签</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/logo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/logo@2x.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">霖 の Blog</a></h3><div class="description"><p>Hello there!</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/BolinJay"><i class="fa fa-github"></i></a></li><li><a href="mailto:jay1124cbl@126.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_51491109?spm=1000.2115.3001.5343"><i class="fa fa-mortar-board"></i></a></li></ul></div><details class="ltr" open><summary>目录</summary><div class="tocmenu"><p><ol class="toclist"><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#TypeScript"><span class="toclist-text">TypeScript</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#TypeScript-%E4%BB%8B%E7%BB%8D"><span class="toclist-text">TypeScript 介绍</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#TypeScript-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toclist-text">TypeScript 是什么</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#TypeScript-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%B8%BA-JS-%E6%B7%BB%E5%8A%A0%E7%B1%BB%E5%9E%8B%E6%94%AF%E6%8C%81"><span class="toclist-text">TypeScript 为什么要为 JS 添加类型支持?</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#TypeScript-%E7%9B%B8%E6%AF%94-JS-%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toclist-text">TypeScript 相比 JS 的优势</span></a></li></ol></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#TypeScript-%E5%88%9D%E4%BD%93%E9%AA%8C"><span class="toclist-text">TypeScript 初体验</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#%E5%AE%89%E8%A3%85%E7%BC%96%E8%AF%91-TS-%E7%9A%84%E5%B7%A5%E5%85%B7%E5%8C%85"><span class="toclist-text">安装编译 TS 的工具包</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#%E7%BC%96%E8%AF%91%E5%B9%B6%E8%BF%90%E8%A1%8C-TS-%E4%BB%A3%E7%A0%81"><span class="toclist-text">编译并运行 TS 代码</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#%E7%AE%80%E5%8C%96%E8%BF%90%E8%A1%8C-TS-%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="toclist-text">简化运行 TS 的步骤</span></a></li></ol></li></ol></li></ol></p></div></details></div><div class="footer"><div class="p"> <span>  </span><i class="fa fa-star"></i><span> Bo Lin Jay</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>初识TypeScript</a></h3></div><div class="post-content"><p><h1 id="TypeScript"><a href="#TypeScript" class="headerlink" title="TypeScript"></a>TypeScript</h1><ul>
+<li>TypeScript 介绍</li>
+<li>TypeScript 初体验</li>
+<li>TypeScript 常用类型</li>
+<li>TypeScript 高级类型</li>
+<li>TypeScript 类型声明文件</li>
+<li>在 React 中使用 TypeScript</li>
+</ul>
+<h2 id="TypeScript-介绍"><a href="#TypeScript-介绍" class="headerlink" title="TypeScript 介绍"></a>TypeScript 介绍</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.typescriptlang.org/">TS 官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.tslang.cn/">TS 中文参考 - 不再维护</a></li>
+</ul>
+<p><img src="/2022/08/15/%E5%88%9D%E8%AF%86TypeScript/TS_logo.png" alt="TS Logo"></p>
+<ol>
+<li>TypeScript 是什么</li>
+<li>TypeScript 为什么要为 JS 添加类型支持?</li>
+<li>TypeScript 相比 JS 的优势</li>
+</ol>
+<h3 id="TypeScript-是什么"><a href="#TypeScript-是什么" class="headerlink" title="TypeScript 是什么"></a>TypeScript 是什么</h3><ul>
+<li><strong><code>TypeScript</code> 简称：TS，是 JavaScript 的超集</strong>，简单来说就是：JS 有的 TS 都有</li>
+</ul>
+<p><img src="/2022/08/15/%E5%88%9D%E8%AF%86TypeScript/TS%E6%98%AFJS%E7%9A%84%E8%B6%85%E9%9B%86.png" alt="TS是JS的超集"></p>
+<ul>
+<li>TypeScript &#x3D; <code>Type</code> + JavaScript（在 JS 基础之上，<strong>为 JS 添加了类型支持</strong>）</li>
+<li>TypeScript 是<em>微软</em>开发的开源编程语言，可以在任何运行 JavaScript 的地方运行</li>
+</ul>
+<p><img src="/2022/08/15/%E5%88%9D%E8%AF%86TypeScript/TSvsJS.png" alt="TS 和 JS 的对比"></p>
+<h3 id="TypeScript-为什么要为-JS-添加类型支持"><a href="#TypeScript-为什么要为-JS-添加类型支持" class="headerlink" title="TypeScript 为什么要为 JS 添加类型支持?"></a>TypeScript 为什么要为 JS 添加类型支持?</h3><ul>
+<li>背景：JS 的类型系统存在“先天缺陷”，JS 代码中绝大部分错误都是类型错误（Uncaught TypeError） </li>
+<li>这些经常出现的错误，导致了在使用 JS 进行项目开发时，增加了找 Bug、改 Bug 的时间，严重影响开发效率</li>
+</ul>
+<p>为什么会这样？</p>
+<ul>
+<li><p>从编程语言的动静来区分，<strong>TypeScript 属于静态类型的编程语言</strong>，<strong>JavaScript 属于动态类型的编程语言</strong></p>
+<ul>
+<li>静态类型：<strong>编译</strong>期做类型检查</li>
+<li>动态类型：<strong>执行</strong>期做类型检查</li>
+</ul>
+</li>
+<li><p>代码编译和代码执行的顺序：1 编译 2 执行</p>
+</li>
+<li><p>对于 JS 来说：需要等到代码真正去执行的时候才能发现错误（晚）</p>
+</li>
+<li><p>对于 TS 来说：在代码编译的时候（代码执行前）就可以发现错误（早）</p>
+</li>
+</ul>
+<p>并且，配合 VSCode 等开发工具，TS 可以提前到<strong>在编写代码的同时就发现代码中的错误</strong>，减少找 Bug、改 Bug 时间  </p>
+<p>对比：</p>
+<ul>
+<li>使用 JS：<ol>
+<li>在 VSCode 里面写代码</li>
+<li>在浏览器中运行代码 –&gt; 运行时，才会发现错误【晚】</li>
+</ol>
+</li>
+<li>使用 TS：<ol>
+<li>在 VSCode 里面写代码 –&gt; 写代码的同时，就会发现错误【早】</li>
+<li>在浏览器中运行代码</li>
+</ol>
+</li>
+</ul>
+<h3 id="TypeScript-相比-JS-的优势"><a href="#TypeScript-相比-JS-的优势" class="headerlink" title="TypeScript 相比 JS 的优势"></a>TypeScript 相比 JS 的优势</h3><ol>
+<li><strong>更早（写代码的同时）发现错误</strong>，减少找 Bug、改 Bug 时间，提升开发效率</li>
+<li>程序中任何位置的代码都有<strong>代码提示</strong>，随时随地的安全感，增强了开发体验</li>
+<li>强大的类型系统提升了代码的可维护性，使得<strong>重构代码更加容易</strong></li>
+<li>支持最新的 ECMAScript 语法，<strong>优先体验最新的语法，让你走在前端技术的最前沿</strong> </li>
+<li>TS 类型推断机制，不需要在代码中的每个地方都显示标注类型，让你在享受优势的同时，尽量降低了学习负担</li>
+</ol>
+<p>除此之外，Vue 3 源码使用 TS 重写、Angular 默认支持 TS、React 与 TS 完美配合，TypeScript 已成为大中型前端 项目的首选编程语言</p>
+<p>目前，前端最新的开发技术栈：</p>
+<ol>
+<li>React： TS + Hooks</li>
+<li>Vue： TS + Vue3</li>
+</ol>
+<ul>
+<li>注意： Vue2 对 TS 的支持不好~</li>
+</ul>
+<hr>
+<h2 id="TypeScript-初体验"><a href="#TypeScript-初体验" class="headerlink" title="TypeScript 初体验"></a>TypeScript 初体验</h2><ol>
+<li>安装编译 TS 的工具包</li>
+<li>编译并运行 TS 代码</li>
+<li>简化运行 TS 的步骤</li>
+</ol>
+<h3 id="安装编译-TS-的工具包"><a href="#安装编译-TS-的工具包" class="headerlink" title="安装编译 TS 的工具包"></a>安装编译 TS 的工具包</h3><ul>
+<li>问题：为什么要安装编译 TS 的工具包?</li>
+<li>回答：Node.js&#x2F;浏览器，只认识 JS 代码，不认识 TS 代码。需要先将 TS 代码转化为 JS 代码，然后才能运行</li>
+<li>安装命令：<code>npm i -g typescript</code><ul>
+<li>typescript 包：用来编译 TS 代码的包，提供了 <code>tsc</code> 命令，实现了 TS -&gt; JS 的转化</li>
+<li><em>注意：Mac 电脑安装全局包时，需要添加 <code>sudo</code> 获取权限：<code>sudo npm i -g typescript</code></em>  yarn 全局安装：<code>sudo yarn global add typescript</code></li>
+</ul>
+</li>
+<li>验证是否安装成功：tsc –v(查看 typescript 的版本)</li>
+</ul>
+<p><img src="/2022/08/15/%E5%88%9D%E8%AF%86TypeScript/TS%E7%BC%96%E8%AF%91.png" alt="TS 编译"></p>
+<h3 id="编译并运行-TS-代码"><a href="#编译并运行-TS-代码" class="headerlink" title="编译并运行 TS 代码"></a>编译并运行 TS 代码</h3><ol>
+<li>创建 hello.ts 文件（注意：**TS 文件的后缀名为 <code>.ts</code>**）</li>
+<li>将 TS 编译为 JS：在终端中输入命令，<code>tsc hello.ts</code>（此时，在同级目录中会出现一个同名的 JS 文件）</li>
+<li>执行 JS 代码：在终端中输入命令，<code>node hello.js</code></li>
+</ol>
+<p>1 创建 ts 文件  &#x3D;&#x3D;&#x3D;&gt;  2 编译 TS  &#x3D;&#x3D;&#x3D;&gt;  3 执行 JS  </p>
+<ul>
+<li>说明：所有合法的 JS 代码都是 TS 代码，有 JS 基础只需要学习 TS 的类型即可</li>
+<li>注意：由 TS 编译生成的 JS 文件，代码中就没有类型信息了</li>
+</ul>
+<h3 id="简化运行-TS-的步骤"><a href="#简化运行-TS-的步骤" class="headerlink" title="简化运行 TS 的步骤"></a>简化运行 TS 的步骤</h3><ul>
+<li>问题描述：每次修改代码后，都要重复执行两个命令，才能运行 TS 代码，太繁琐</li>
+<li>简化方式：使用 <code>ts-node</code> 包，直接在 Node.js 中执行 TS 代码</li>
+<li>安装命令：<code>npm i -g ts-node</code><ul>
+<li>ts-node 包提供了 <code>ts-node</code> 命令</li>
+<li>使用方式：<code>ts-node hello.ts</code> 相当于：1 tsc 命令  2 node（注意：ts-node 不会生成 js 文件）</li>
+</ul>
+</li>
+</ul>
+<p>解释：ts-node 命令在内部偷偷的将 TS -&gt; JS，然后，再运行 JS 代码</p>
+</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-08-15</span><i class="fa fa-tag"></i><a class="tag" href="/tags/TypeScript/" title="TypeScript">TypeScript </a><span class="leancloud_visitors"></span><span>大约1279个字, 4分钟15秒读完</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,https://bolinjay.github.io/2022/08/15/初识TypeScript/,霖 の Blog,初识TypeScript,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2022/08/20/%E6%B5%8B%E8%AF%95/" title="测试">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2022/08/15/Vue%E7%9F%A5%E8%AF%86%E7%82%B9%E4%B8%B2%E8%AE%B2/" title="Vue知识点">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@latest/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  notify:false || false, 
+  verify:false|| false, 
+  app_id:'SnELmjOFdyalxhrkTORtOBxz-gzGzoHsz',
+  app_key:'B95LVO8Ulv5DQJUsfQXkvlBq',
+  placeholder:'Hello, World!',
+  path: window.location.pathname,
+  serverURLs: '',
+  visitor:true,
+  recordIP:true,
+  avatar:'retro'
+})</script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script></body></html>
