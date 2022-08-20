@@ -1,0 +1,593 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Bo Lin Jay"><title>项目总结 · 霖 の Blog</title><meta name="description" content="项目总结小城夏天电商平台线上地址：http://jay1124.web3v.work/#/
+GitHub：https://github.com/BoLinJay/xiaochengxiaitian
+后台管里系统-权限控制
+前端权限的意义如果仅从能够修改服务器中数据库中的数据层面上讲， 确实只在后端做"><meta name="keywords" content="Blog,博客,柏霖 の"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.2.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/tags">标签</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/logo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/logo@2x.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">霖 の Blog</a></h3><div class="description"><p>Hello here!</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/BolinJay"><i class="fa fa-github"></i></a></li><li><a href="mailto:jay1124cbl@126.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_51491109?spm=1000.2115.3001.5343"><i class="fa fa-mortar-board"></i></a></li></ul></div></div><div class="footer"><div class="p"> <span>  </span><i class="fa fa-star"></i><span> Bo Lin Jay</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>项目总结</a></h3></div><div class="post-content"><p><h1 id="项目总结"><a href="#项目总结" class="headerlink" title="项目总结"></a>项目总结</h1><p>小城夏天电商平台线上地址：<a target="_blank" rel="noopener" href="http://jay1124.web3v.work/#/">http://jay1124.web3v.work/#/</a></p>
+<p>GitHub：<a target="_blank" rel="noopener" href="https://github.com/BoLinJay/xiaochengxiaitian">https://github.com/BoLinJay/xiaochengxiaitian</a></p>
+<h2 id="后台管里系统-权限控制"><a href="#后台管里系统-权限控制" class="headerlink" title="后台管里系统-权限控制"></a>后台管里系统-权限控制</h2><blockquote>
+<p>前端权限的意义<br>如果仅从能够修改服务器中数据库中的数据层面上讲， 确实只在后端做控制就足够了， 那为什么越来越多的项目也进行了前端权限的控制， 主要有这几方面的好处</p>
+<p>1.降低非法操作的可能性<br>2.尽可能排除不必要清求， 减轻服务器压力<br>3.提高用户体验</p>
+</blockquote>
+<p><strong>实现步骤，方法</strong></p>
+<blockquote>
+<p>接口访问的权限控制，这个就是利用<code>axios</code>拦截器，判断token是否存在，访问有关页面时携带token,<br>菜单列表的权限控制，分为两种：</p>
+<ul>
+<li>显示所有菜单，用户访问不在自己权限中的页面时，提醒无权限</li>
+<li>只显示当前用户能访问的权限内菜单，如果用户通过URL强制访问页面则返回404</li>
+</ul>
+<p>1.先创建一个不需要权限访问的路由表，比如登录页，404页面，在把需要权限的路由表创建出来，<code>这里的404页面要写在路由列表的最后，所有使用路由懒加载的方式创建</code>这里的权限路由表可以不创建，直接从后端获取，但是后期维护和添加新需求麻烦。</p>
+<p>2.获取后端传送来的路由信息，和路由表作比较，生成最总用户可以访问的路由表</p>
+<p>3.使用<code>router.addRoutes</code>添加用户所需要的路由信息</p>
+<p>4.可以使用vuex管理路由表，进行永久存储，然后从vuex中获取路由表进行渲染</p>
+<p>5.数据操作权限可以加载路由元数据中<code>meta</code>中 ，使用v-if&#x2F;v-show，根据数据进行动态显示，也可注册一个自定义指令<br><img src="https://img-blog.csdnimg.cn/354b41cdbf4a48f88fc5bb0c0613e89e.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/5a201436392b4765b7d8c167785d9038.png" alt="在这里插入图片描述"></p>
+</blockquote>
+<p>接口访问的接口控制，这个就是利用<code>axios</code>拦截器，判断token是否存在，访问有关页面时携带token,</p>
+<pre><code class="js">// 每次请求都为http头增加Authorization字段，其内容为token
+service.interceptors.request.use(
+    config =&gt; &#123;
+        if (store.state.user.token) &#123;
+            config.headers.Authorization = `token $&#123;store.state.user.token&#125;`;
+        &#125;
+        return config
+    &#125;,
+    err =&gt; &#123;
+        return Promise.reject(err)
+    &#125;
+);
+</code></pre>
+<p>2.菜单列表的权限控制，分为两种：</p>
+<ul>
+<li>显示所有菜单，用户访问不在自己权限中的页面时，提醒无权限</li>
+<li>只显示当前用户能访问的权限内菜单，如果用户通过URL强制访问页面则返回404</li>
+</ul>
+<p>很显然，第一种方法不合适，那咱们梳理一下第二种方法，大致流程为：</p>
+<p><img src="https://img-blog.csdnimg.cn/ef1b1f3983e14dd782fb2f7f629328dd.png" alt="在这里插入图片描述"></p>
+<p>配置自定义指令代码</p>
+<pre><code class="jsx">//main.js
+//按扭权限指令
+Vue.directive(&#39;allow&#39;, &#123;
+  inserted: (el, binding, vnode) =&gt; &#123;
+    let permissionList = vnode.context.$route.meta.permission;
+    if (!permissionList.includes(binding.value)) &#123;
+      el.parentNode.removeChild(el)
+    &#125;
+  &#125;
+&#125;)
+</code></pre>
+<h3 id="1-路由信息匹配代码"><a href="#1-路由信息匹配代码" class="headerlink" title="1.路由信息匹配代码"></a>1.路由信息匹配代码</h3><pre><code class="js">// router/index.js
+/**
+ * 根据权限匹配路由
+ * @param &#123;array&#125; permission 权限列表（菜单列表）
+ * @param &#123;array&#125; asyncRouter 异步路由对象
+ */
+function routerMatch(permission, asyncRouter) &#123;
+  return new Promise((resolve) =&gt; &#123;
+    const routers = [];
+    // 创建路由
+    function createRouter(permission) &#123;
+         // 根据路径匹配到的router对象添加到routers中即可
+      permission.forEach((item) =&gt; &#123;
+        if (item.children &amp;&amp; item.children.length) &#123;
+          createRouter(item.children)
+        &#125;
+        let path = item.path;
+        // 循环异步路由，将符合权限列表的路由加入到routers中
+        asyncRouter.find((s) =&gt; &#123;
+          if (s.path === &#39;&#39;) &#123;
+            s.children.find((y) =&gt; &#123;
+              if (y.path === path) &#123;
+                y.meta.permission = item.permission;
+                routers.push(s);
+              &#125;
+            &#125;)
+          &#125;
+          if (s.path === path) &#123;
+            s.meta.permission = item.permission;
+            routers.push(s);
+          &#125;
+        &#125;)
+      &#125;)
+    &#125;
+
+    createRouter(permission)
+    resolve([routers])
+  &#125;)
+&#125;
+</code></pre>
+<h3 id="2-axios的封装代码"><a href="#2-axios的封装代码" class="headerlink" title="2.axios的封装代码"></a>2.axios的封装代码</h3><pre><code class="js">// 1. 创建一个新的axios实例
+// 2. 请求拦截器，如果有token进行头部携带
+// 3. 响应拦截器：1. 剥离无效数据  2. 处理token失效
+// 4. 导出一个函数，调用当前的axsio实例发请求，返回值promise
+
+import axios from &#39;axios&#39;
+import store from &#39;@/store&#39;
+import router from &#39;@/router&#39;
+
+// 导出基准地址，原因：其他地方不是通过axios发请求的地方用上基准地址
+export const baseURL = &#39;http://pcapi-xiaotuxian-front-devtest.itheima.net/&#39;
+const instance = axios.create(&#123;
+  // axios 的一些配置，baseURL  timeout
+  baseURL,
+  timeout: 5000
+&#125;)
+
+instance.interceptors.request.use(config =&gt; &#123;
+  // 拦截业务逻辑
+  // 进行请求配置的修改
+  // 如果本地又token就在头部携带
+  // 1. 获取用户信息对象
+  const &#123; profile &#125; = store.state.user
+  // 2. 判断是否有token
+  if (profile.token) &#123;
+    // 3. 设置token
+    config.headers.Authorization = `Bearer $&#123;profile.token&#125;`
+  &#125;
+  return config
+&#125;, err =&gt; &#123;
+  return Promise.reject(err)
+&#125;)
+
+// res =&gt; res.data  取出data数据，将来调用接口的时候直接拿到的就是后台的数据
+instance.interceptors.response.use(res =&gt; res.data, err =&gt; &#123;
+  // 401 状态码，进入该函数
+  if (err.response &amp;&amp; err.response.status === 401) &#123;
+    // 1. 清空无效用户信息
+    // 2. 跳转到登录页
+    // 3. 跳转需要传参（当前路由地址）给登录页码
+    store.commit(&#39;user/setUser&#39;, &#123;&#125;)
+    // 当前路由地址
+    // 组件里头：`/user?a=10` $route.path === /user  $route.fullPath === /user?a=10
+    // js模块中：router.currentRoute.value.fullPath 就是当前路由地址，router.currentRoute 是ref响应式数据
+    const fullPath = encodeURIComponent(router.currentRoute.value.fullPath)
+    // encodeURIComponent 转换uri编码，防止解析地址出问题
+    router.push(&#39;/login?redirectUrl=&#39; + fullPath)
+  &#125;
+  return Promise.reject(err)
+&#125;)
+
+// 请求工具函数
+export default (url, method, submitData) =&gt; &#123;
+  // 负责发请求：请求地址，请求方式，提交的数据
+  return instance(&#123;
+    url,
+    method,
+    // 1. 如果是get请求  需要使用params来传递submitData   ?a=10&amp;c=10
+    // 2. 如果不是get请求  需要使用data来传递submitData   请求体传参
+    // [] 设置一个动态的key, 写js表达式，js表达式的执行结果当作KEY
+    // method参数：get,Get,GET  转换成小写再来判断
+    // 在对象，[&#39;params&#39;]:submitData ===== params:submitData 这样理解
+    [method.toLowerCase() === &#39;get&#39; ? &#39;params&#39; : &#39;data&#39;]: submitData
+  &#125;)
+&#125;
+</code></pre>
+<h2 id="小城夏天电商平台"><a href="#小城夏天电商平台" class="headerlink" title="小城夏天电商平台"></a>小城夏天电商平台</h2><h3 id="1-vueX持久化方法"><a href="#1-vueX持久化方法" class="headerlink" title="1.vueX持久化方法"></a>1.vueX持久化方法</h3><blockquote>
+<ul>
+<li>使用插件  vuex-persistedstate</li>
+<li>存储本地 localStorage ,</li>
+</ul>
+</blockquote>
+<h3 id="2-骨架屏封装"><a href="#2-骨架屏封装" class="headerlink" title="2.骨架屏封装"></a>2.骨架屏封装</h3><blockquote>
+<p>步骤： 基础布局，props，接收参数：高度，宽度，背景色，是否开启动画</p>
+</blockquote>
+<pre><code class="vue">&lt;template&gt;
+  &lt;div class=&quot;xtx-skeleton&quot; :style=&quot;&#123;width,height&#125;&quot; :class=&quot;&#123;shan:animated&#125;&quot;&gt;
+    &lt;!-- 1 盒子--&gt;
+    &lt;div class=&quot;block&quot; :style=&quot;&#123;backgroundColor:bg&#125;&quot;&gt;&lt;/div&gt;
+    &lt;!-- 2 闪效果 xtx-skeleton 伪元素 ---&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<h3 id="3-轮播图封装"><a href="#3-轮播图封装" class="headerlink" title="3.轮播图封装"></a>3.轮播图封装</h3><blockquote>
+<p>完成基础布局，逻辑封装有下一页，上一页，自动播放，自动播放的间隔时间</p>
+<p>步骤：</p>
+<p>props接收：数据信息，是否自动播放，自动播放的间隔时间</p>
+<p>使用<code>ref</code>定义一个num类型的响应式数据，用来控制显示哪张图片，<code>v-for</code>遍历数据，<code>v-bind</code>绑定<code>class</code>样式，判断当前图片索引和定义的数据相等，就给他加样式样式<code>opacity：1</code>和<code>z-index:</code>,默认样式都是不显示的，上下页按钮绑定事件，改变响应式数据的值，从而实现图片的切换。</p>
+<p>自动播放:开启一个定时器，改边这个响应式数据的值，实现自动切换，自动播放的间隔时间就是传进来的props值</p>
+</blockquote>
+<h3 id="4-数据懒加载"><a href="#4-数据懒加载" class="headerlink" title="4.数据懒加载"></a>4.数据懒加载</h3><blockquote>
+<p>步骤：</p>
+<p>进入可视区时才调用<code>API</code>函数获取数据，</p>
+<p>使用<code>@vueuse/core</code> 中的 <code>useIntersectionObserver</code>的插件监听DOM元素是否进入可视区，封装一个函数，接收内观察的对象和<code>API</code>函数,return数据和该DOM元素</p>
+</blockquote>
+<h4 id="分析useIntersectionObserver的参数"><a href="#分析useIntersectionObserver的参数" class="headerlink" title="分析useIntersectionObserver的参数"></a>分析<code>useIntersectionObserver</code>的参数</h4><pre><code class="js">// stop 是停止观察是否进入或移出可视区域的行为    
+const &#123; stop &#125; = useIntersectionObserver(
+  // target 是观察的目标dom容器，必须是dom容器，而且是vue3.0方式绑定的dom对象
+  target,
+  // isIntersecting 是否进入可视区域，true是进入 false是移出
+  // observerElement 被观察的dom
+  ([&#123; isIntersecting &#125;], observerElement) =&gt; &#123;
+    // 在此处可根据isIntersecting来判断，然后做业务
+  &#125;,
+)
+</code></pre>
+<h4 id="封装的函数"><a href="#封装的函数" class="headerlink" title="封装的函数"></a>封装的函数</h4><pre><code class="js">// hooks 封装逻辑，提供响应式数据。
+import &#123; useIntersectionObserver &#125; from &#39;@vueuse/core&#39;
+import &#123; ref &#125; from &#39;vue&#39;
+// 数据懒加载函数
+export const useLazyData = (apiFn) =&gt; &#123;
+  // 需要
+  // 1. 被观察的对象
+  // 2. 不同的API函数
+  const target = ref(null)
+  const result = ref([])
+  const &#123; stop &#125; = useIntersectionObserver(
+    target,
+    ([&#123; isIntersecting &#125;], observerElement) =&gt; &#123;
+      if (isIntersecting) &#123;
+        stop()
+        // 调用API获取数据
+        apiFn().then(data =&gt; &#123;
+          result.value = data.result
+        &#125;)
+      &#125;
+    &#125;
+  )
+  // 返回---&gt;数据（dom,后台数据）
+  return &#123; target, result &#125;
+&#125;
+</code></pre>
+<h3 id="5-图片懒加载"><a href="#5-图片懒加载" class="headerlink" title="5.图片懒加载"></a>5.图片懒加载</h3><blockquote>
+<p>步骤</p>
+<p>使用webAPI:<code>IntersectionObserver</code>判断图片是否进入可视区，封装了一个自定义指令,进行<code>src</code>的替换，在<code>img</code>上使用使用<code>v-lazyload</code>值为图片地址，不设置<code>src</code>属性</p>
+<p>封装自定义指令的方法vue2：vue.directive,vue3:app.directive</p>
+</blockquote>
+<h4 id="介绍一下IntersectionObserver"><a href="#介绍一下IntersectionObserver" class="headerlink" title="介绍一下IntersectionObserver"></a>介绍一下<code>IntersectionObserver</code></h4><pre><code class="js">// 创建观察对象实例
+const observer = new IntersectionObserver(callback[, options])
+// callback 被观察dom进入可视区离开可视区都会触发
+// - 两个回调参数 entries , observer
+// - entries 被观察的元素信息对象的数组 [&#123;元素信息&#125;,&#123;&#125;]，信息中isIntersecting判断进入或离开
+// - observer 就是观察实例
+// options 配置参数
+// - 三个配置属性 root rootMargin threshold
+// - root 基于的滚动容器，默认是document
+// - rootMargin 容器有没有外边距
+// - threshold 交叉的比例
+
+// 实例提供两个方法
+// observe(dom) 观察哪个dom
+// unobserve(dom) 停止观察那个dom
+</code></pre>
+<h4 id="自定义指令的封装"><a href="#自定义指令的封装" class="headerlink" title="自定义指令的封装"></a>自定义指令的封装</h4><pre><code class="js">import defaultImg from &#39;@/assets/images/200.png&#39;
+
+const DirectiveImage = (app) =&gt; &#123;
+    // 图片懒加载指令
+    app.directive(&#39;lazyload&#39;, &#123;
+        mounted(el, binding) &#123;
+            const observer = new IntersectionObserver(([&#123; isIntersecting &#125;]) =&gt; &#123;
+                if(isIntersecting) &#123;
+                    // 进入可视区后停止观察
+                    observer.unobserve(el)
+                    // 图片加载失败显示默认图片
+                    //onerror 事件会在文档或图像加载过程中发生错误时被触发。
+                    el.onerror = () =&gt; &#123;
+                        el.src = defaultImg
+                    &#125;
+                    // 替换src
+                        el.src = binding.value
+                &#125;
+            &#125;,
+            &#123;
+                threshold:0.01
+            &#125;)
+            // 开始观察
+            observer.observe(el)
+        &#125;
+    &#125;)
+&#125;
+</code></pre>
+<h4 id="如何自定义指令"><a href="#如何自定义指令" class="headerlink" title="如何自定义指令"></a>如何自定义指令</h4><ul>
+<li>定义局部自定义指令</li>
+</ul>
+<blockquote>
+<p>局部自定义指令需要在组件的<code>directives</code>结构中定义，它是一个单独的结构</p>
+</blockquote>
+<pre><code class="js">//vue3和vue2的组件自定义指令方法相同，只是钩子函数不同
+directives:&#123;
+    指令名称：&#123;
+            钩子函数
+     &#125;
+</code></pre>
+<ul>
+<li>自定义全局指令<br><img src="https://img-blog.csdnimg.cn/7ef0fb5d19f7450ea067deab1a59fa8e.png" alt="在这里插入图片描述"></li>
+</ul>
+<pre><code class="js">//vue2
+Vue.directive(&#39;directiveName&#39;, &#123;
+      //钩子函数
+    bind：只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。
+    inserted：被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中)。
+    update：所在组件的 VNode 更新时调用，但是可能发生在其子 VNode 更新之前。指令的值可能发生了改变，也可能没有。但是你可以通过比较更新前后的值来忽略不必要的模板更新
+    componentUpdated：指令所在组件的 VNode 及其子 VNode 全部更新后调用。
+    unbind：只调用一次，指令与元素解绑时调用。
+&#125;)
+
+
+// vue3全局指令
+app.directive(&#39;directiveName&#39;, &#123;
+    // 在绑定元素的 attribute 或事件监听器被应用之前调用, 在指令需要附加须要在普通的 v-on 事件监听器前调用的事件监听器时，这很有用
+    created() &#123;&#125;,
+    // 当指令第一次绑定到元素并且在挂载父组件之前调用
+    beforeMount() &#123;&#125;,
+    // 在绑定元素的父组件被挂载后调用
+    mounted() &#123;&#125;,
+    // 在更新包含组件的 VNode 之前调用
+    beforeUpdate() &#123;&#125;,
+    // 在包含组件的 VNode 及其子组件的 VNode 更新后调用
+    updated() &#123;&#125;,
+    // 在卸载绑定元素的父组件之前调用
+    beforeUnmount() &#123;&#125;,
+    // 当指令与元素解除绑定且父组件已卸载时, 只调用一次
+    unmounted() &#123;&#125;,
+&#125;);
+</code></pre>
+<h4 id="如何自定义全局方法或属性"><a href="#如何自定义全局方法或属性" class="headerlink" title="如何自定义全局方法或属性"></a>如何自定义全局方法或属性</h4><blockquote>
+<p>原理：在 <code>Vue.prototype</code> 上添加了一个方法</p>
+</blockquote>
+<ul>
+<li>使用<code>Vue.prototype</code></li>
+</ul>
+<pre><code class="js">// 在main.js中写
+ Vue.prototype.getData = (params) =&gt; &#123;
+     ...
+ &#125;
+</code></pre>
+<ul>
+<li>使用install + <code>Vue.prototype</code></li>
+</ul>
+<pre><code class="js"> // 在你的全局函数文件fun.js中写
+    export default &#123;
+      install (Vue) &#123;
+        Vue.prototype.getData = () =&gt; &#123;
+          return &#123; name: &#39;scout&#39;&#125;
+        &#125;
+      &#125;
+    &#125;
+// main.js 引入
+   import getData from &#39;./fun&#39;
+   Vue.use(getData) 
+</code></pre>
+<h4 id="如何自定义全局组件"><a href="#如何自定义全局组件" class="headerlink" title="如何自定义全局组件"></a>如何自定义全局组件</h4><ul>
+<li>vue2</li>
+</ul>
+<pre><code class="js">// 公共vue组件: components文件夹下面的Loading.vue文件：
+import LoadingComponent from &#39;@/components/Loading&#39;
+
+export default &#123;
+  install (Vue) &#123;
+    Vue.component(&#39;Loading&#39;, LoadingComponent)
+  &#125;
+&#125;
+
+// 全局组件： public文件夹下面的Loading.js文件。在main.js中引入:
+import Loading from &quot;@/public/Loading&quot;
+Vue.use(Loading)
+
+// 在vue任何组件上都可以直接使用：&lt;Loading /&gt;
+</code></pre>
+<ul>
+<li>vue3</li>
+</ul>
+<pre><code class="js">/* 以下两种二选一 */
+const app = createApp(App);
+app.use(ElementPlus)
+app.use(router)
+app.mount(&#39;#app&#39;)
+//组件全局注册: app.component(&#39;组件名 用其调用 短横线分割命名&#39;,组件对象 name 首字母大写命名)
+app.component(&#39;side-box&#39;,sideBox) 
+</code></pre>
+<h3 id="6-面包屑组件的封装"><a href="#6-面包屑组件的封装" class="headerlink" title="6.面包屑组件的封装"></a>6.面包屑组件的封装</h3><blockquote>
+<p>总结，一下知识点</p>
+<ul>
+<li><p>render 是vue提供的一个渲染函数，优先级大于el,template等选项，用来提供组件结构。</p>
+</li>
+<li><p>注意：</p>
+<ul>
+<li>vue2.0 render函数提供h（createElement）函数用来创建节点</li>
+<li>vue3.0 h（createElement）函数有 vue 直接提供，需要按需导入</li>
+</ul>
+</li>
+<li><p>this.$slots.default() 获取默认插槽的node结构，按照要求拼接结构。</p>
+</li>
+<li><p>h函数的传参 tag 标签名|组件名称, props 标签属性|组件属性, node 子节点|多个节点</p>
+</li>
+<li><p>具体参考 <a target="_blank" rel="noopener" href="http://zhoushugang.gitee.io/erabbit-client-pc-document/guide/[https:/vue-docs-next-zh-cn.netlify.app/guide/render-function.html#dom-%E6%A0%91](https:/vue-docs-next-zh-cn.netlify.app/guide/render-function.html#dom-%E6%A0%91)">render</a></p>
+</li>
+<li><p>注意：不要在 xtx-bread 组件插槽写注释，也会被解析。</p>
+</li>
+</ul>
+</blockquote>
+<pre><code class="js">&lt;script&gt;
+import &#123; h &#125; from &#39;vue&#39;
+export default &#123;
+  name: &#39;XtxBread&#39;,
+  render () &#123;
+    // 用法
+    // 1. template 标签去除，单文件组件
+    // 2. 返回值就是组件内容
+    // 3. vue2.0 的h函数传参进来的，vue3.0 的h函数导入进来
+    // 4. h 第一个参数 标签名字  第二个参数 标签属性对象  第三个参数 子节点
+    // 需求
+    // 1. 创建xtx-bread父容器
+    // 2. 获取默认插槽内容
+    // 3. 去除xtx-bread-item组件的i标签，因该由render函数来组织
+    // 4. 遍历插槽中的item，得到一个动态创建的节点，最后一个item不加i标签
+    // 5. 把动态创建的节点渲染再xtx-bread标签中
+    const items = this.$slots.default()
+    const dymanicItems = []
+    items.forEach((item, i) =&gt; &#123;
+      dymanicItems.push(item)
+      if (i &lt; (items.length - 1)) &#123;
+        dymanicItems.push(h(&#39;i&#39;, &#123; class: &#39;iconfont icon-angle-right&#39; &#125;))
+      &#125;
+    &#125;)
+    return h(&#39;div&#39;, &#123; class: &#39;xtx-bread&#39; &#125;, dymanicItems)
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h3 id="7-批量注册组件"><a href="#7-批量注册组件" class="headerlink" title="7.批量注册组件"></a>7.批量注册组件</h3><blockquote>
+<p>步骤：</p>
+<ul>
+<li>使用 <code>require</code> 提供的函数 <code>context</code> 加载某一个目录下的所有 <code>.vue</code> 后缀的文件。</li>
+<li>然后context函数会返回一个导入函数importFn<ul>
+<li>它有一个属性 <code>keys()</code> 获取所有的文件路径</li>
+</ul>
+</li>
+<li>通过文件路径数组，通过遍历数组，再使用 <code>importFn</code> 根据路径导入组件对象</li>
+<li>遍历的同时进行全局注册即可</li>
+</ul>
+</blockquote>
+<pre><code class="js">// 批量导入需要使用一个函数 require.context(dir,deep,matching)
+// 参数：1. 目录  2. 是否加载子目录  3. 加载的正则匹配
+const importFn = require.context(&#39;./&#39;, false, /\.vue$/)
+// console.dir(importFn.keys()) 文件名称数组
+import Message from &#39;./Message&#39;
+
+export default &#123;
+    install(app) &#123;
+        // 全自动批量注册   牛逼克拉斯 
+        importFn.keys().forEach(key =&gt; &#123;
+                // 导入组件
+            const component = importFn(key).default
+                  // 注册组件
+            app.component(component.name, component)
+        &#125;);
+ 总结：
+require.context(参数1,参数2,参数3) 是webpack提供的一个自动导入的API
+参数1：加载的文件目录
+参数2：是否加载子目录
+参数3：正则，匹配文件
+返回值：导入函数 fn
+keys() 获取读取到的所有文件列表
+#04-顶级类目-基础布局搭建
+</code></pre>
+<h3 id="8-无限加载"><a href="#8-无限加载" class="headerlink" title="8.无限加载"></a>8.无限加载</h3><blockquote>
+<p>无限加载其实就是根据页码显示数据的另一种表现形式</p>
+<p>步骤 </p>
+<ul>
+<li>判断是否进入可视区，进入可视区后调用函数获取数据，每获取一组数据将页码+1，没有数据则返回FALSE，并把阻止请求</li>
+</ul>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/fc7811c768f7416f9f5ae826ff10f2fc.png" alt="在这里插入图片描述"></p>
+<p>落地代码</p>
+<ul>
+<li>封装的无限加载组件</li>
+</ul>
+<pre><code class="js">&lt;template&gt;
+  &lt;div class=&quot;xtx-infinite-loading&quot; ref=&quot;container&quot;&gt;
+    &lt;div class=&quot;loading&quot; v-if=&quot;loading&quot;&gt;
+      &lt;span class=&quot;img&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;text&quot;&gt;正在加载...&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;none&quot; v-if=&quot;finished&quot;&gt;
+      &lt;span class=&quot;img&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;text&quot;&gt;亲，没有更多了&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import &#123; ref &#125; from &#39;vue&#39;
+import &#123; useIntersectionObserver &#125; from &#39;@vueuse/core&#39;
+export default &#123;
+  name: &#39;XtxInfiniteLoading&#39;,
+  props: &#123;
+    loading: &#123;
+      type: Boolean,
+      default: false
+    &#125;,
+    finished: &#123;
+      type: Boolean,
+      default: false
+    &#125;
+  &#125;,
+  setup (props, &#123; emit &#125;) &#123;
+    const container = ref(null)
+    useIntersectionObserver(
+      container,
+      ([&#123; isIntersecting &#125;], dom) =&gt; &#123;
+        if (isIntersecting) &#123;
+          if (props.loading === false &amp;&amp; props.finished === false) &#123;
+            emit(&#39;infinite&#39;)
+          &#125;
+        &#125;
+      &#125;,
+      &#123;
+        threshold: 0
+      &#125;
+    )
+    return &#123; container &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<ul>
+<li>使用</li>
+</ul>
+<pre><code class="js"> &lt;XtxInfiniteLoading :loading=&quot;loading&quot; :finished=&quot;finished&quot; @infinite=&quot;getData&quot; /&gt;
+</code></pre>
+<h3 id="8-商品详情放大镜组件"><a href="#8-商品详情放大镜组件" class="headerlink" title="8.商品详情放大镜组件"></a>8.商品详情放大镜组件</h3><blockquote>
+<p>步骤</p>
+<ul>
+<li>首先准备大图容器和遮罩容器</li>
+<li>然后使用<code>@vueuse/core</code>的<code>useMouseInElement</code>方法获取基于元素的偏移量</li>
+<li>计算出 遮罩容器定位与大容器北京定位 暴露出数据给模板使用</li>
+</ul>
+</blockquote>
+<p>放大镜效果落地代码</p>
+<pre><code class="js">// 放大镜效果
+  const usePreviewImg = () =&gt; &#123;
+    // 是否显示遮罩和大图
+    const show = ref(false)
+    const target = ref(null)
+   // elementX 鼠标基于容器左上角X轴偏移
+  // elementY 鼠标基于容器左上角Y轴偏移
+  // isOutside 鼠标是否在模板容器外
+    const &#123; elementX, elementY, isOutside&#125; = useMouseInElement(target)
+      // 遮罩的位置
+    const position = reactive(&#123;
+        left: 0,
+        top: 0
+    &#125;)
+    // 大图的位置
+    const bgPosition = reactive(&#123;
+        backgroundPositionX: 0,
+        backgroundPositionY: 0
+    &#125;)
+    watch([elementX, elementY, isOutside], () =&gt; &#123;
+          // 控制X轴方向的定位 0-200 之间
+        if (elementX.value &lt; 100) position.left = 0
+        else if (elementX.value &gt; 300) position.left = 200
+        else position.left = elementX.value - 100
+        // 控制Y轴方向的定位 0-200 之间
+        if (elementY.value &lt; 100) position.top = 0
+        else if (elementY.value &gt; 300) position.top = 200
+        else position.top = elementY.value - 100
+        // 设置大背景的定位
+        bgPosition.backgroundPositionX = -position.left * 2 + &#39;px&#39;
+        bgPosition.backgroundPositionY = -position.top * 2 + &#39;px&#39;
+         // 设置遮罩容器的定位
+        position.left = position.left + &#39;px&#39;
+        position.top = position.top + &#39;px&#39;
+      
+        // 设置是否显示预览大图
+        show.value = !isOutside.value
+        &#125;)
+         return &#123; position, bgPosition, show, target &#125;
+    &#125;
+</code></pre>
+<h3 id="9-本地购物车操作和合并线上购物车"><a href="#9-本地购物车操作和合并线上购物车" class="headerlink" title="9.本地购物车操作和合并线上购物车"></a>9.本地购物车操作和合并线上购物车</h3><blockquote>
+<p>购物车实现步骤：</p>
+<p>当用户进行购物车操作时，下判断是否登录</p>
+<p>未登录状态下，通过mutations修改vuex数据，这里vuex已实现数据持久化。</p>
+<p>当用户登录后，在actions中调用后台接口，响应成功后通过mutations修改vuex中的数据，然后将本地购物车和线上购物车合并，并且清除掉本地的购物车，</p>
+<p>没登录状态下就是本地操作，登录状态下的是调用后台接口进行操作的<br><img src="https://img-blog.csdnimg.cn/ef7f9ca377644a27aa2e0d8c4b2b712a.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/4145220e518f4bc7b69668704bcc6a9c.png" alt="在这里插入图片描述"></p>
+</blockquote>
+<h3 id="10-路由导航守卫"><a href="#10-路由导航守卫" class="headerlink" title="10.路由导航守卫"></a>10.路由导航守卫</h3><pre><code class="JS">router.beforeEach((to, from,next) =&gt; &#123;
+  // ...
+  // 返回 false 以取消导航
+  return false
+&#125;)
+`to: 即将要进入的目标`
+`from: 当前导航正要离开的路由`
+`next:放行`
+</code></pre>
+</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-08-01</span><i class="fa fa-tag"></i><a class="tag" href="/tags/个人项目/" title="个人项目">个人项目 </a><span class="leancloud_visitors"></span><span>大约4519个字, 15分钟3秒读完</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,https://bolinjay.github.io/2022/08/01/项目/,霖 の Blog,项目总结,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2022/08/10/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/" title="面试题目">上一篇</a></li></ul></div><script src="/js/visitors.js"></script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script></body></html>

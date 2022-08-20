@@ -1,0 +1,48 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Bo Lin Jay"><title>面试题目 · 霖 の Blog</title><meta name="description" content="面试题目1、实现一个new操作符        // &amp;lt;!-- new操作符 
+        // &amp;lt;!-- 1.创建一个空对象 --&amp;gt;
+        // &amp;lt;!-- 2.将空对象的原型指向构造函数的原型 --&amp;gt;
+        // &amp;lt;!-- 3.将空对象作"><meta name="keywords" content="Blog,博客,柏霖 の"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.2.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/tags">标签</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/logo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/logo@2x.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">霖 の Blog</a></h3><div class="description"><p>Hello here!</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/BolinJay"><i class="fa fa-github"></i></a></li><li><a href="mailto:jay1124cbl@126.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_51491109?spm=1000.2115.3001.5343"><i class="fa fa-mortar-board"></i></a></li></ul></div></div><div class="footer"><div class="p"> <span>  </span><i class="fa fa-star"></i><span> Bo Lin Jay</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>面试题目</a></h3></div><div class="post-content"><p><h1 id="面试题目"><a href="#面试题目" class="headerlink" title="面试题目"></a>面试题目</h1><h3 id="1、实现一个new操作符"><a href="#1、实现一个new操作符" class="headerlink" title="1、实现一个new操作符"></a>1、实现一个new操作符</h3><pre><code class="js">        // &lt;!-- new操作符 
+        // &lt;!-- 1.创建一个空对象 --&gt;
+        // &lt;!-- 2.将空对象的原型指向构造函数的原型 --&gt;
+        // &lt;!-- 3.将空对象作为构造函数的上下文（改变this指向） --&gt;
+        // &lt;!-- 4.对构造函数的返回值处理判断  --&gt;  return Object对象时，new操作符返回return的数据
+        function Fn(age, name) &#123;
+            this.age = age
+            this.name = name
+            return &#123;
+                a: 1
+            &#125;
+        &#125;
+
+        function myNew(fn, ...reset) &#123;
+            let obj = &#123;&#125;
+            Object.setPrototypeOf(obj, fn.prototype)
+            let result = fn.apply(obj, reset)
+            return result instanceof Object ? result : obj
+        &#125;
+        console.log(myNew(Fn, 18, &#39;zs&#39;));
+</code></pre>
+<h3 id="2、数据类型检测的方式有哪些"><a href="#2、数据类型检测的方式有哪些" class="headerlink" title="2、数据类型检测的方式有哪些"></a>2、数据类型检测的方式有哪些</h3><blockquote>
+<p>1.判断基本数据类型用 <code>typeof</code>   因为 <code>Object</code>,<code>Array</code>,<code>Function</code>都会返回<code>Object</code></p>
+<p>2.判断引用数据类型用 <code>instanceof</code>   </p>
+</blockquote>
+<p><strong><code>typeof</code></strong></p>
+<pre><code class="js">console.log(typeof 2);               // number
+console.log(typeof true);            // boolean
+console.log(typeof &#39;str&#39;);           // string
+console.log(typeof []);              // object    
+console.log(typeof function()&#123;&#125;);    // function
+console.log(typeof &#123;&#125;);              // object
+console.log(typeof undefined);       // undefined
+console.log(typeof null);            // object
+</code></pre>
+<p><strong><code>instanceof</code></strong></p>
+<pre><code class="js">console.log(2 instanceof Number);                    // false
+console.log(true instanceof Boolean);                // false 
+console.log(&#39;str&#39; instanceof String);                // false 
+ 
+console.log([] instanceof Array);                    // true
+console.log(function()&#123;&#125; instanceof Function);       // true
+console.log(&#123;&#125; instanceof Object);                   // true
+</code></pre>
+</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-08-10</span><span class="leancloud_visitors"></span><span>大约254个字, 50秒读完</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,https://bolinjay.github.io/2022/08/10/面试题目/,霖 の Blog,面试题目,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2022/08/15/JavaScript%E9%9D%A2%E8%AF%95%E7%B2%BE%E8%AE%B2/" title="javascript面试题目">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2022/08/01/%E9%A1%B9%E7%9B%AE/" title="项目总结">下一篇</a></li></ul></div><script src="/js/visitors.js"></script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script></body></html>
